@@ -1,0 +1,11 @@
+GET http://localhost:3000/cocktails
+
+###
+POST http://localhost:3000/cocktails
+content-type: application/json
+
+{
+    "name": "Fruit Tingle",
+    "base": "Vodka",
+    "instructions": "Add the vodka, blue curacao & lemonade then give it a light stir. Pour a small dash of raspberry cordial on top. Garnish with a pineapple wedge or maraschino cherry"
+}
