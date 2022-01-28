@@ -1,11 +1,10 @@
-require 'json'
 class CocktailsController < ApplicationController
-    before_action :load_cocktails
     # skip_before_action :verify_authenticity_token #vulnerable to cross site foragry
     before_action :set_cocktail, only: [:show, :update, :destroy, :edit]
+    before_action :set_base_spirits, only: [:new, :edit]
 
     def index
-        # render json: @cocktails
+        @cocktails = Cocktail.all
     end
 
     def new
@@ -17,46 +16,44 @@ class CocktailsController < ApplicationController
     end
 
     def create
-        new_cocktail = {id: @cocktails.last["id"] + 1,  name: params[:name], base: params[:base], instructions: params[:instructions]} 
-        @cocktails.push(new_cocktail)
-        save_cocktails(@cocktails)
+        Cocktail.create(cocktail_params)
         redirect_to cocktails_path
     end 
 
     def show
-        # render json: @cocktail
+
     end
 
     def update
-        new_cocktail = {id: @cocktail["id"], name: params[:name], base: params[:base], instructions: params[:instructions]}
-        @cocktails[@index] = new_cocktail
-        save_cocktails(@cocktails)
-        redirect_to cocktail_path(new_cocktail[:id])
+        @cocktail.update(cocktail_params)
+        redirect_to cocktail_path(@cocktail.id)
     end
 
     def destroy
-        @cocktails.delete_at(@index)
-        save_cocktails(@cocktails)
-        redirect_to cocktails_path #sends a get request to "get '/cocktails', to: 'cocktails#index', as: 'cocktails'"
+       @cocktail.delete
+       redirect_to cocktails_path
     end
 
     private
 
-    def load_cocktails 
-        @cocktails = JSON.parse(File.read(Rails.public_path.join('cocktails.json')))
-       end 
-    
-    def save_cocktails(cocktails)
-        File.write(Rails.public_path.join('cocktails.json'), JSON.generate(cocktails))
-    end 
 
     def set_cocktail
-        @cocktail = @cocktails.find {|cocktail| cocktail["id"] == params[:id].to_i}
-        unless @cocktail
-            render file: Rails.public_path.join("404.html"), status: :not_found, layout: false
-            return
-        end
-        @index = @cocktails.index {|cocktail| cocktail["id"] == @cocktail["id"]}
+       begin
+       id = params[:id].to_i
+       @cocktail = Cocktail.find(id)
+       rescue
+        render file: Rails.public_path.join("404.html"), status: :not_found
+       end
+    end
+
+    def set_base_spirits
+        # Finds and loads all base spirits
+        @base_spirits = BaseSpirit.all
+    end
+
+    def cocktail_params
+    #sets the paramaters you want to have included from form when displaying cocktail
+        params.permit(:name, :base_spirit_id, :instructions)
     end
       
 end

@@ -1,9 +1,9 @@
-<h1><%=@cocktail["name"]%></h1>
-<h3>Base Spirit: <%=@cocktail["base"].capitalize%></h3>
+<h1><%=@cocktail.name%></h1>
+<h3>Base Spirit: <%=@cocktail.base_spirit.name.capitalize%></h3>
 <h4 class="sub-heading">Instructions</h4>
-<p><%=@cocktail["instructions"]%></p>
+<p><%=@cocktail.instructions%></p>
 <div> 
-  <%= button_to "Edit", {action: "edit", id: @cocktail["id"]}, {method: :get}%>
-  <%= button_to "Delete", {action: "destroy", id: @cocktail["id"]}, {method: :delete, data: {confirm: "Are you sure?"}}%>
+  <%= button_to "Edit", {action: "edit", id: @cocktail.id}, {method: :get}%>
+  <%= button_to "Delete", {action: "destroy", id: @cocktail.id}, {method: :delete, data: {confirm: "Are you sure?"}}%>
 </div>
 <%= link_to "Back", cocktails_path%>
