@@ -8,7 +8,7 @@ class CocktailsController < ApplicationController
     end
 
     def new
-
+        @cocktail = Cocktail.new
     end
 
     def edit
@@ -16,8 +16,13 @@ class CocktailsController < ApplicationController
     end
 
     def create
-        Cocktail.create(cocktail_params)
+       @cocktail = Cocktail.new(cocktail_params)
+       if @cocktail.save
         redirect_to cocktails_path
+       else
+        set_base_spirits
+        render "new", status: 422
+       end
     end 
 
     def show
@@ -25,8 +30,13 @@ class CocktailsController < ApplicationController
     end
 
     def update
-        @cocktail.update(cocktail_params)
+       if @cocktail.update(cocktail_params)
         redirect_to cocktail_path(@cocktail.id)
+    else
+        set_base_spirits
+        render "edit", status: 422
+       end
+
     end
 
     def destroy
