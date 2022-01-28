@@ -1,7 +1,7 @@
 require 'json'
 class CocktailsController < ApplicationController
     before_action :load_cocktails
-    skip_before_action :verify_authenticity_token
+    # skip_before_action :verify_authenticity_token #vulnerable to cross site foragry
     before_action :set_cocktail, only: [:show, :update, :destroy, :edit]
 
     def index

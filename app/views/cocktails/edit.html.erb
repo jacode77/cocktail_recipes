@@ -1,6 +1,7 @@
 <h2>Update: <%=@cocktail["name"]%></h2>
 <form action=<%=update_cocktail_path(@cocktail["id"])%> method="POST">
 <input type="hidden" name="_method" value="put">
+<input type="hidden" value=<%=form_authenticity_token%> name="authenticity_token">
   <div>
     <label for="name">Name</label>
     <input type="text" name="name" id="name" value=<%=@cocktail["name"]%>>
