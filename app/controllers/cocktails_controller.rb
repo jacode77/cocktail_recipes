@@ -16,6 +16,7 @@ class CocktailsController < ApplicationController
     end
 
     def create
+        pp cocktail_params
        @cocktail = Cocktail.new(cocktail_params)
        if @cocktail.save
         redirect_to cocktails_path
@@ -63,7 +64,7 @@ class CocktailsController < ApplicationController
 
     def cocktail_params
     #sets the paramaters you want to have included from form when displaying cocktail
-        params.permit(:name, :base_spirit_id, :instructions)
+        params.require(:cocktail).permit(:name, :base_spirit_id, :instructions)
     end
       
 end

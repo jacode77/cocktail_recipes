@@ -11,10 +11,7 @@
   </head>
 
   <body>
-    <nav style="display:flex; flex-direction:row; justify-content: space-around;">
-      <a href="http://localhost:3000/cocktails">Home</a>
-      <a href="http://localhost:3000/cocktails/new">Create a Cocktail</a>
-    </nav>
+    <%= render "shared/nav" %> <%# no need to include the underscore. When we include render, it already recognises it's a partial %>
     <%= yield %>
   </body>
 </html>

@@ -1,6 +1,12 @@
+<main id='cocktails-index'>
 <h1> All the cocktails!!</h1>
-<ul>
+<section class="card-deck">
   <%@cocktails.each do |cocktail|%>
-    <li><%= link_to(cocktail.name, cocktail_path(cocktail.id))%></li>
+  <div class="card">
+    <h5><%=cocktail.name%></h5>
+    <p><%=cocktail.instructions%></p>
+    <%= link_to "See more", cocktail_path(cocktail.id)%>
+  </div>
   <%end%>
-</ul>
+  </section>
+</main>
